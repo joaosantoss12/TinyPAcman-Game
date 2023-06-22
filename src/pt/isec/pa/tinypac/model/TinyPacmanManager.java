@@ -15,6 +15,7 @@ import pt.isec.pa.tinypac.utils.Direction;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -312,5 +313,27 @@ public class TinyPacmanManager implements IGameEngineEvolve {
      */
     public boolean checkNewRanking() {
         return fsm.checkNewRanking();
+    }
+
+    /**
+     * Loads the top 5 rankings from a file.
+     *
+     * @return the list of top 5 rankings
+     */
+    public List<Ranking> loadTop5() {
+        List<Ranking> rankings = new ArrayList<>();
+        File arquivo = new File("top5.ser");
+
+        if (!arquivo.exists()) {
+            return rankings;
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
+            rankings = (List<Ranking>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Erro ao ler o arquivo top5.ser: " + e.getMessage());
+        }
+
+        return rankings;
     }
 }

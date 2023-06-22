@@ -435,9 +435,15 @@ public class TinyPacData implements Serializable {
     public void initGame(){
         maze = null;
 
-        int lastLevel = getCurrentLevel() - 1;
+        int lastLevel = currentLevel - 1;
 
-        String filename = "levels/Level" + getCurrentLevel() + ".txt";
+        String filename;
+        if (currentLevel < 10) {
+            filename = "Level0" + currentLevel + ".txt";
+        } else {
+            filename = "Level" + currentLevel + ".txt";
+        }
+
         maze = CreateMaze(filename);
 
         while(maze == null){

@@ -135,7 +135,7 @@ public class TopFiveUI extends BorderPane {
         }
         this.setVisible(false);
 
-        List<Ranking> top5Rankings = loadTop5();
+        List<Ranking> top5Rankings = tinyPacmanManager.loadTop5();
 
         list.getChildren().clear();
             for (int i = 0; i < top5Rankings.size(); i++) {
@@ -181,25 +181,4 @@ public class TopFiveUI extends BorderPane {
         return tilePane;
     }
 
-    /**
-     * Loads the top 5 rankings from a file.
-     *
-     * @return the list of top 5 rankings
-     */
-    private List<Ranking> loadTop5() {
-        List<Ranking> rankings = new ArrayList<>();
-        File arquivo = new File("top5.ser");
-
-        if (!arquivo.exists()) {
-            return rankings;
-        }
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
-            rankings = (List<Ranking>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Erro ao ler o arquivo top5.ser: " + e.getMessage());
-        }
-
-        return rankings;
-    }
 }
